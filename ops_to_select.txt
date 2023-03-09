@@ -1,0 +1,27 @@
+# List of ops that are not supported by the native TFLite runtime and may require
+# fallback to TensorFlow kernels.
+#
+# This list may change over time as new TensorFlow Lite versions are released.
+#
+# To enable TF kernel fallback, pass this file to the --ops_to_select flag of
+# the TFLite converter, like this:
+#
+#   $ tflite_convert --ops_to_select=ops_to_select.txt ...
+#
+# The file format is simply a list of operation names, one per line.
+#
+# If you want to add your own custom ops to this list, you can create a new
+# file with your additional ops and pass it to the --allow_custom_ops flag of
+# the TFLite converter, like this:
+#
+#   $ tflite_convert --allow_custom_ops --ops_to_select=my_ops.txt ...
+
+
+# Ops not supported in TFLite versions < 2.4.0:
+CtcGreedyDecoder
+CtcLoss
+FusedBatchNormV2
+FusedConv2D
+NonMaxSuppressionV3
+TopKV2
+DecodeJpeg 
