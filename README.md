@@ -1,7 +1,9 @@
 <img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1678399925/334924936_2574475806033853_7045665737658280683_n_thoo6y.png" width="100%" height="auto" alt="tensorflow-image-detection icon"/>
 
 ---
+
 # **TEAM MEMBERS**
+
 - Joeje Aika G. Blanes
 - Armand C. Catubig Jr.
 - John Patrick Ryan D. Mandal
@@ -13,20 +15,25 @@
 
 <br/>
 
+### Todos
+
+- [ ] Port the model to TensorflowLite
+
 ## Installation
+
 Make sure you have [Python 3](https://www.python.org/downloads/) installed, then install [Tensorflow](https://www.tensorflow.org/install/) on your system, and clone this repo.
 
 <br/>
 
 ## Usage
 
-
 ### Prepare the image data sets
-In order to start the transfer learning process, a folder named ``training_dataset`` needs to be created in the root of the project folder. This folder will contain the image data sets for all the subjects, for whom the classification is to be performed.
+
+In order to start the transfer learning process, a folder named `training_dataset` needs to be created in the root of the project folder. This folder will contain the image data sets for all the subjects, for whom the classification is to be performed.
 
 [Download the Datasets here](https://bit.ly/3mcb3aS)
 
-Create the ``training_dataset`` folder and add the images for all the data sets in the following manner -
+Create the `training_dataset` folder and add the images for all the data sets in the following manner -
 
 ```javascript
 /
@@ -48,21 +55,24 @@ Create the ``training_dataset`` folder and add the images for all the data sets 
 |
 |
 ```
-This enables classification of images between the ``plastics`` and ``paper`` data sets.
+
+This enables classification of images between the `plastics` and `paper` data sets.
 
 > Make sure to include multiple variants of the subject (side profiles, zoomed in images etc.), the more the images, the better is the result. sa kani diri kay wala pa nako apili og glass
 
 ### Initiate transfer learning
+
 Go to the project directory and run -
 
 ```javascript
 $ bash train.sh
 ```
-This script installs the ``Inception`` model and initiates the re-training process for the specified image data sets.
 
-Once the process is complete, it will return a training accuracy somewhere between ``85% - 100%``.
+This script installs the `Inception` model and initiates the re-training process for the specified image data sets.
 
-The ``training summaries``, ``retrained graphs`` and ``retrained labels`` will be saved in a folder named ``tf_files``.
+Once the process is complete, it will return a training accuracy somewhere between `85% - 100%`.
+
+The `training summaries`, `retrained graphs` and `retrained labels` will be saved in a folder named `tf_files`.
 
 ### Classify objects
 
@@ -70,19 +80,18 @@ The ``training summaries``, ``retrained graphs`` and ``retrained labels`` will b
 python classify.py
 ```
 
-###  Live Inferencing with Camera
+### Live Inferencing with Camera
+
 ```javascript
 python inference.py
 ```
-
-
-
 
 [TrashNet Dataset](https://github.com/garythung/trashnet)
 
 <br/>
 
 ## License
+
 MIT License
 
 Copyright (c) 2017
