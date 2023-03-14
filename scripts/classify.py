@@ -1,6 +1,6 @@
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
-
+import cv2
 import sys
 import os
 
@@ -14,7 +14,7 @@ def analyse(image_path):
         image_data = f.read()
 
     # Load the label file and strip off carriage returns
-    label_lines = [line.rstrip() for line in  tf.io.gfile.GFile("./tf_files/retrained_labels.txt")]
+    label_lines = [line.rstrip() for line in tf.io.gfile.GFile("./tf_files/retrained_labels.txt")]
 
     # Load the TensorFlow model
     with tf.io.gfile.GFile("../tf_files/retrained_graph.pb", 'rb') as f:
@@ -27,15 +27,16 @@ def analyse(image_path):
         softmax_tensor = sess.graph.get_tensor_by_name('final_result:0')
         predictions = sess.run(softmax_tensor, {'DecodeJpeg/contents:0': image_data})
 
-        # Sort to show labels of first prediction in order of confidence
-        top_k = predictions[0].argsort()[-len(predictions[0]):][::-1]
-        obj = {}
-        for node_id in top_k:
-            human_string = label_lines[node_id]
-            score = predictions[0][node_id]
-            obj[human_string] = float(score)
+        # Filter out detections with a confidence level below 80%
+        filtered_obj = {}
+        for i in range(len(predictions[0])):
+            score = predictions[0][i]
+            if score >= 0.8:
+                human_string = label_lines[i]
+                filtered_obj[human_string] = float(score)
 
-        return obj
+        return filtered_obj
 
-result = analyse('./training_dataset/random.jpg')
+
+result = analyse('./training_dataset/paper2.jpg')
 print(result)
