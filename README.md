@@ -5,19 +5,20 @@
 # **TEAM MEMBERS**
 
 - Joeje Aika G. Blanes
-- Armand C. Catubig Jr.
-- John Patrick Ryan D. Mandal
-- Edrian James L. Olmedo
-- Rose Fe I. Rotersos
+- [Armand C. Catubig Jr.](https://github.com/Armand-Catubig)
+- [John Patrick Ryan D. Mandal](https://github.com/beefysalad)
+- [Edrian James L. Olmedo](https://github.com/CurlyLips)
+- [Rose Fe I. Rotersos](https://github.com/rosef48)
 - Ahl Pritz Solon
-- Paolo J. Taboso
-- Keanue Dax Teaño
+- [Paolo J. Taboso](https://github.com/tabsgage)
+- [Keanue Dax Teaño](https://github.com/Daxu010)
 
 <br/>
 
-### Todos
+### Todos / RoadMap
 
 - [ ] Port the model to TensorflowLite
+- [ ] Setup DJango backend for REST API
 
 ## Installation
 
