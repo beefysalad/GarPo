@@ -17,8 +17,9 @@
 
 ### Todos / RoadMap
 
-- [ ] Port the model to TensorflowLite
-- [ ] Setup DJango backend for REST API
+- [x] Port the model to TensorflowLite
+- [ ] Setup DJango/Express.js Backend for REST API on the Raspi
+- [ ] Communication between REST API and Flutter Mobile Application
 
 ## Installation
 
