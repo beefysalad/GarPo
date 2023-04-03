@@ -12,10 +12,10 @@ import cv2
 
 def analyse():
     # Load the label file and strip off carriage returns
-    label_lines = [line.rstrip() for line in tf.io.gfile.GFile("./tf_files/retrained_labels.txt")]
+    label_lines = [line.rstrip() for line in tf.io.gfile.GFile("../tf_files/retrained_labels.txt")]
 
     # Load the TensorFlow model
-    with tf.io.gfile.GFile("../tf_files/retrained_graph.pb", 'rb') as f:
+    with tf.io.gfile.GFile("../tf_files/graph_optimized.pb", 'rb') as f:
         graph_def = tf.GraphDef()
         graph_def.ParseFromString(f.read())
         _ = tf.import_graph_def(graph_def, name='')
@@ -47,7 +47,7 @@ def analyse():
             filtered_obj = {}
             for i in range(len(predictions[0])):
                 score = predictions[0][i]
-                if score >= 0.80:
+                if score >= 0.8:
                     human_string = label_lines[i]
                     filtered_obj[human_string] = float(score)
 
