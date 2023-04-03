@@ -2,6 +2,12 @@
 
 ---
 
+# CpE462 Practice and Design 2
+
+THESIS FINALE GOIS :mortar_board:
+
+---
+
 # **TEAM MEMBERS**
 
 - Joeje Aika G. Blanes
@@ -59,7 +65,7 @@ Create the `training_dataset` folder and add the images for all the data sets in
 |
 ```
 
-This enables classification of images between the `plastics` and `paper` data sets.
+This enables classification of images between the `plastics` and `paper` data sets. Image Augmentation techniques have also been applied here to increase the dataset
 
 > Make sure to include multiple variants of the subject (side profiles, zoomed in images etc.), the more the images, the better is the result. sa kani diri kay wala pa nako apili og glass
 
@@ -89,6 +95,17 @@ python classify.py
 python inference.py
 ```
 
+---
+
+To run the RESTApi server, make sure you have nodejs installed
+
+### Rest API Server
+
+```javascript
+node RestAPI.js
+```
+
+Big shoutouts to the team behind TrashNet
 [TrashNet Dataset](https://github.com/garythung/trashnet)
 
 <br/>
