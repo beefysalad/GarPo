@@ -13,7 +13,8 @@
 - [Paolo J. Taboso](https://github.com/tabsgage)
 - [Keanue Dax Teaño](https://github.com/Daxu010)
 
-<br/>
+> p.s. sorry sa wala nako na tag ang github account kay wala ko kibaw gud XD pm lang nya nako sa inyong github accounts para ma tag above.
+> <br/>
 
 ### Todos / RoadMap
 
