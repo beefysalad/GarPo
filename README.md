@@ -19,8 +19,6 @@ THESIS FINALE GOIS :mortar_board:
 - [Paolo J. Taboso](https://github.com/tabsgage)
 - [Keanue Dax Teaño](https://github.com/Daxu010)
 
-> <br/>
-
 ### Todos / RoadMap
 
 - [x] Port the model to TensorflowLite
