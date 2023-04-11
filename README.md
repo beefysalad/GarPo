@@ -10,16 +10,15 @@ THESIS FINALE GOIS :mortar_board:
 
 # **TEAM MEMBERS**
 
-- Joeje Aika G. Blanes
+- [Joeje Aika G. Blanes](https://github.com/aikablanes)
 - [Armand C. Catubig Jr.](https://github.com/Armand-Catubig)
 - [John Patrick Ryan D. Mandal](https://github.com/beefysalad)
 - [Edrian James L. Olmedo](https://github.com/CurlyLips)
 - [Rose Fe I. Rotersos](https://github.com/rosef48)
-- Ahl Pritz Solon
+- [Ahl Pritz Solon](https://github.com/ahlpritz)
 - [Paolo J. Taboso](https://github.com/tabsgage)
 - [Keanue Dax Teaño](https://github.com/Daxu010)
 
-> p.s. sorry sa wala nako na tag ang github account kay wala ko kibaw gud XD pm lang nya nako sa inyong github accounts para ma tag above.
 > <br/>
 
 ### Todos / RoadMap
