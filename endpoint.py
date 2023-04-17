@@ -2,7 +2,7 @@ import keyboard
 import requests
 
 qr_data = ""
-url = 'http://localhost:8080/test'
+url = 'http://localhost:8080/qr-data'
 
 def on_press(event):
     global qr_data

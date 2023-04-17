@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+.gitignore
 training_dataset
 inception
 tf_files
@@ -105,3 +106,5 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+/node_modules

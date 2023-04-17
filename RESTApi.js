@@ -58,7 +58,7 @@ app.get('/', (req, res) => {
   res.send(array);
 });
 
-app.post('/test', (req, res) => {
+app.post('/qr-data', (req, res) => {
   console.log(req.body);
   res.send('SUCCESS');
 });

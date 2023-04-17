@@ -1,0 +1,25 @@
+{
+  "name": "garpo",
+  "version": "1.0.0",
+  "description": "<img src=\"https://res.cloudinary.com/dhqqwdevm/image/upload/v1678399925/334924936_2574475806033853_7045665737658280683_n_thoo6y.png\" width=\"100%\" height=\"auto\" alt=\"tensorflow-image-detection icon\"/>",
+  "main": "RESTApi.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/beefysalad/GarPo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/beefysalad/GarPo/issues"
+  },
+  "homepage": "https://github.com/beefysalad/GarPo#readme",
+  "dependencies": {
+    "cloudinary": "^1.36.1",
+    "express": "^4.18.2",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0"
+  }
+}
