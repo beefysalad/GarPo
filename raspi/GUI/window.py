@@ -52,7 +52,9 @@ def on_press():
     
     
 def done_clicked():
+    b0.config(state="disabled")
     on_press()
+    
     #keyboard.on_press(on_press)
     #window.destroy()
 
