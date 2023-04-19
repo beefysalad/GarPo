@@ -1,10 +1,12 @@
-<img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1678399925/334924936_2574475806033853_7045665737658280683_n_thoo6y.png" width="100%" height="auto" alt="tensorflow-image-detection icon"/>
+# IoT-Based Waste Segregator for Paper, Metal, and Plastic using Image Classification
+
+<img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1681906622/334924936_2574475806033853_7045665737658280683_n_thoo6y_1_cchglu.png" width="100%" height="auto" alt="tensorflow-image-detection icon"/>
 
 ---
 
-# CpE462 Practice and Design 2
+## CpE462 Practice and Design 2
 
-THESIS FINALE GOIS :mortar_board:
+A final project design proposal presented in partial fulfillment of the Requirements for the Degree Bachelor of Science in Computer Engineering
 
 ---
 
@@ -22,8 +24,34 @@ THESIS FINALE GOIS :mortar_board:
 ### Todos / RoadMap
 
 - [x] Port the model to TensorflowLite
-- [x] Setup DJango/Express.js Backend for REST API on the Raspi
+- [x] Setup Express.js Backend for REST API on the Raspi
 - [x] Communication between REST API and Flutter Mobile Application
+- [ ] Connect Entire components together
+
+## Tech Stack Used
+
+- Python
+- JavaScript
+- Node.js
+- Express.js
+- Cloudinary
+- Firebase
+- Flutter
+- Dart
+- Tensorflow
+- TensorflowLite
+- Inception v2 Model
+
+## Components used
+
+- Raspberry Pi 4 Model B
+- QR/Bar Code Scanner
+- IR Nightvision Raspberry Pi Camera 1080p
+- 3 MG995 Servo Motors
+- 3 Ultrasonic sensors HC-SR04
+- 1 IR Sensor HW-201
+- Inductive Proximity Sensor
+- 3.5" RPI Touch Controller Display
 
 ## Installation
 
