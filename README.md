@@ -46,7 +46,7 @@ Adviser: Julian N. Semblante
 
 ## Components used
 
-- Raspberry Pi 4 Model B
+- Raspberry Pi 4 Model B 
 - QR/Bar Code Scanner
 - IR Nightvision Raspberry Pi Camera 1080p
 - 3 MG995 Servo Motors
