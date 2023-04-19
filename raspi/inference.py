@@ -9,6 +9,7 @@ import RPi.GPIO as GPIO
 # Load the label file and strip off carriage returns
 label_lines = [line.rstrip() for line in tf.io.gfile.GFile("./FINALE_WEIGHTS/updated_graph.txt")]
 points = 0
+
 # Load the TensorFlow model
 with tf.io.gfile.GFile("./FINALE_WEIGHTS/updated_graph.pb", 'rb') as f:
     graph_def = tf.GraphDef()
@@ -60,26 +61,27 @@ with tf.Session() as sess:
                     cv2.rectangle(frame, (0, 0), (w + 10, h + 10), (0, 0, 0), -1)
                     cv2.putText(frame, f"{label}: {score:.2f}", (5, h + 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
                     if(label=='plastic'):
-                        print("NISUD PLSATIC")
+                        print("NISUD PLASTIC")
                         points += 2
                     elif(label=='paper'):
                         print("NISUD PAPER")
                         points += 1
                     with open('points.txt', 'w') as f:
                         f.write(str(points))
-                    subprocess.Popen(['sudo','python','./GUI/window.py',label,str(points)])
+                    #subprocess.Popen(['pkill', '-f', 'window.py']).wait()
+                    #subprocess.Popen(['python','./GUI/window.py',label,str(points)])
+                    #window_process = subprocess.Popen(['python','./GUI/window.py','-q',str(queue)])
+                    subprocess.Popen(['pkill', '-f', 'window.py']); subprocess.Popen(['python','./GUI/window.py',label,str(points)])
+
                 else:
                     trash_text_size, _ = cv2.getTextSize("TRASH NOT IDENTIFIED", cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
                     cv2.putText(frame, "TRASH NOT IDENTIFIED", (5, h + trash_text_size[1] + 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
                     
 
-
-            
-
             # Display the resulting frame
             
-            cv2.imshow('Object Detection', frame)
-            print(points)
+            #cv2.imshow('Object Detection', frame)
+            #print(points)
             # Save the image with the classified class and confidence score
             cv2.imwrite('test.jpg', frame)
 

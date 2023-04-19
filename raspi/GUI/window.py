@@ -4,15 +4,22 @@ import requests
 import os
 import sys
 import keyboard
+import pyautogui
+import tkinter as tk
+import sys
+
+
+
 
 filename = "./image.jpg"
 filepath = os.path.join(os.getcwd(), filename)
 qr_data = ""
 
+
 def btn_clicked():
     window.destroy()
     
-def on_press(event):
+def on_press2(event):
     global qr_data 
     url = 'http://localhost:8080/qr-data'
     with open('points.txt','w') as f:
@@ -29,8 +36,24 @@ def on_press(event):
         qr_data = ""
     elif len(event.name) == 1 and event.name.isalnum():
        qr_data += event.name.upper() if keyboard.is_pressed('shift') else event.name.lower()
+def on_press():
+    url = 'http://localhost:8080/qr-data'
+    with open('points.txt', 'w') as f:
+        f.write(str(0))
+    qr_data=pyautogui.password("Scan your QR Code")
+    print("QR CODE SCANNED:",qr_data)
+    payload = {'data':qr_data,'points':sys.argv[2]}
+    headers = {'Content-Type': 'application/json'}
+    response = requests.post(url,json=payload,headers=headers)
+    if(response.ok):
+        window.destroy()
+    else:
+        print("NOT GOOD")
+    
+    
 def done_clicked():
-    keyboard.on_press(on_press)
+    on_press()
+    #keyboard.on_press(on_press)
     #window.destroy()
 
 def paper_button():
@@ -182,7 +205,7 @@ b1.place(
 
 canvas.create_text(
     237.5, 194.0,
-    text = sys.argv[2],
+    text = "Detected class is:" + sys.argv[1] + " " + sys.argv[2],
     fill = "#ffffff",
     font = ("Poppins-Regular", int(17.0)))
 

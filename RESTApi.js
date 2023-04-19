@@ -9,6 +9,14 @@ const bodyParser = require('body-parser');
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+const admin = require('firebase-admin');
+const serviceAccount = require("./serviceAccount.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+const db = admin.firestore();
+
 console.clear();
 //Cloudinary and multer config
 cloudinary.config({
@@ -58,9 +66,26 @@ app.get('/', (req, res) => {
   res.send(array);
 });
 
-app.post('/qr-data', (req, res) => {
-  console.log(req.body);
-  res.send('SUCCESS');
+app.post('/qr-data', async (req, res) => {
+  const {data,points} = req.body
+  try {
+    const userRef = db.collection('Users').doc(data);
+    const userDoc = await userRef.get();
+    if (!userDoc.exists) {
+      console.log("NISUD SA ERROR")
+      res.status(404).send('User not found');
+    } else {
+      const userData = userDoc.data();
+      const updatedPoints = userData.Points + parseInt(points);
+      const updatedTotalPoints = userData['Total Points'] + parseInt(points)
+      await userRef.update({ Points: updatedPoints, 'Total Points':updatedTotalPoints });
+      console.log(updatedPoints,updatedTotalPoints);
+      res.send('Points updated successfully');
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error getting user');
+  }
 });
 
 app.post('/upload', (req, res) => {

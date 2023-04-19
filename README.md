@@ -22,8 +22,8 @@ THESIS FINALE GOIS :mortar_board:
 ### Todos / RoadMap
 
 - [x] Port the model to TensorflowLite
-- [ ] Setup DJango/Express.js Backend for REST API on the Raspi
-- [ ] Communication between REST API and Flutter Mobile Application
+- [x] Setup DJango/Express.js Backend for REST API on the Raspi
+- [x] Communication between REST API and Flutter Mobile Application
 
 ## Installation
 
