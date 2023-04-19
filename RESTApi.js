@@ -10,10 +10,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 const admin = require('firebase-admin');
-const serviceAccount = require("./serviceAccount.json");
+const serviceAccount = require('./serviceAccount.json');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
 });
 const db = admin.firestore();
 
@@ -24,16 +24,7 @@ cloudinary.config({
   api_key: '472757221256643',
   api_secret: 'aPd_vvuwGdg56jlU_EjBaNSaTa4',
 });
-// const storage = new CloudinaryStorage({
-//   cloudinary: cloudinary,
-//   params: {
-//     folder: 'paper',
-//     // folder: ['nothing', 'paper', 'plastic', 'machine learning'],
-//   },
-// });
-// const upload = multer({
-//   storage: storage,
-// });
+
 const upload = (req, res, class_name) => {
   const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
@@ -61,25 +52,28 @@ const upload = (req, res, class_name) => {
 };
 
 app.get('/', (req, res) => {
-  array.push('Hello World');
+  array.push('GARPO Rest API v1.0.0');
   console.log(' A QR CODE HAS BEEN SCANNED');
   res.send(array);
 });
 
 app.post('/qr-data', async (req, res) => {
-  const {data,points} = req.body
+  const { data, points } = req.body;
   try {
     const userRef = db.collection('Users').doc(data);
     const userDoc = await userRef.get();
     if (!userDoc.exists) {
-      console.log("NISUD SA ERROR")
+      console.log('NISUD SA ERROR');
       res.status(404).send('User not found');
     } else {
       const userData = userDoc.data();
       const updatedPoints = userData.Points + parseInt(points);
-      const updatedTotalPoints = userData['Total Points'] + parseInt(points)
-      await userRef.update({ Points: updatedPoints, 'Total Points':updatedTotalPoints });
-      console.log(updatedPoints,updatedTotalPoints);
+      const updatedTotalPoints = userData['Total Points'] + parseInt(points);
+      await userRef.update({
+        Points: updatedPoints,
+        'Total Points': updatedTotalPoints,
+      });
+      console.log(updatedPoints, updatedTotalPoints);
       res.send('Points updated successfully');
     }
   } catch (error) {
@@ -103,11 +97,6 @@ app.post('/upload', (req, res) => {
   // });
 });
 
-app.get('/sudo-dart-endpoint/:userId/:points', (req, res) => {
-  const { userId, points } = req.params;
-  console.log(`user id: ${userId} and points: ${points}`);
-  res.send('ACKNOWLEDGED');
-});
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
