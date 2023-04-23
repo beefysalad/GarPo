@@ -21,7 +21,7 @@ with tf.Session() as sess:
     softmax_tensor = sess.graph.get_tensor_by_name('final_result:0')
 
     # Set up the GPIO pins for the IR sensor
-    IR_SENSOR_PIN = 21
+    IR_SENSOR_PIN = 12
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(IR_SENSOR_PIN, GPIO.IN)
     with open('points.txt', 'w') as f:

@@ -3,7 +3,7 @@ from tkinter import ttk
 import requests
 import os
 import sys
-import keyboard
+#import keyboard
 import pyautogui
 import tkinter as tk
 import sys
