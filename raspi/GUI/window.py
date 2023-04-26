@@ -8,17 +8,13 @@ import pyautogui
 import tkinter as tk
 import sys
 
-
-
-
 filename = "./image.jpg"
 filepath = os.path.join(os.getcwd(), filename)
 qr_data = ""
 
-
 def btn_clicked():
     window.destroy()
-    
+
 def on_press2(event):
     global qr_data 
     url = 'http://localhost:8080/qr-data'
@@ -73,8 +69,7 @@ def plastic_button():
     files = {'image': open(filepath, 'rb')}
     response = requests.post(url, files=files)
     print(response)
-    window.destroy()  
-    
+    window.destroy()    
 def btn_feedback():
     feedback_window = Toplevel()
     feedback_window.title("Feedback")
@@ -160,11 +155,6 @@ def btn_feedback():
 
     feedback_window.mainloop()
 
-
-
-
-
-# END
 window = Tk()
 
 window.geometry("480x320")
@@ -188,7 +178,7 @@ b0 = Button(
     relief = "flat")
 
 b0.place(
-    x = 92, y = 254,
+    x = 121, y = 230,
     width = 81,
     height = 30)
 
@@ -201,19 +191,25 @@ b1 = Button(
     relief = "flat")
 
 b1.place(
-    x = 316, y = 254,
+    x = 292, y = 230,
     width = 81,
     height = 30)
 
 canvas.create_text(
-    237.5, 194.0,
-    text = "Detected class is:" + sys.argv[1] + " " + sys.argv[2],
+    323.5, 198.0,
+    text = sys.argv[2],
+    fill = "#ffffff",
+    font = ("Poppins-Regular", int(17.0)))
+
+canvas.create_text(
+    250.0, 171.0,
+    text = sys.argv[1],
     fill = "#ffffff",
     font = ("Poppins-Regular", int(17.0)))
 
 background_img = PhotoImage(file = f"./GUI/background.png")
 background = canvas.create_image(
-    239.5, 90.5,
+    245.5, 113.0,
     image=background_img)
 
 window.resizable(False, False)

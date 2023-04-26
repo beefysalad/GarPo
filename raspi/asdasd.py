@@ -12,15 +12,17 @@ pwm=GPIO.PWM(servo_pin, 50)
 pwm.start(0)
 
 # move to 45 degrees
+print("45 DEG")
 pwm.ChangeDutyCycle(7.5)
 time.sleep(1)
 
 # move back to -45 degrees
+print("-45 DEG")
 pwm.ChangeDutyCycle(2.5)
 time.sleep(1)
 
 # go back to the starting position
-pwm.ChangeDutyCycle(0)
+
 pwm.stop()
 
 GPIO.cleanup()
