@@ -1,6 +1,6 @@
 # IoT-Based Waste Segregator for Paper, Metal, and Plastic using Image Classification
 
-<img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1681906622/334924936_2574475806033853_7045665737658280683_n_thoo6y_1_cchglu.png" width="100%" height="auto" alt="tensorflow-image-detection icon"/>
+<img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1682526360/horizontal_vxeyqg.png" width="100%" height="auto" alt="tensorflow-image-detection icon"/>
 
 ---
 
