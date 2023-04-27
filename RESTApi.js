@@ -54,7 +54,7 @@ const upload = (req, res, class_name) => {
 app.get('/', (req, res) => {
   array.push('GARPO Rest API v1.0.0');
   console.log(' A QR CODE HAS BEEN SCANNED');
-  res.send(array);
+  res.send('GARPO Rest API v1.0.0');
 });
 
 app.post('/qr-data', async (req, res) => {

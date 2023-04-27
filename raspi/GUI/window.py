@@ -3,7 +3,6 @@ from tkinter import ttk
 import requests
 import os
 import sys
-#import keyboard
 import pyautogui
 import tkinter as tk
 import sys
@@ -12,37 +11,68 @@ filename = "./image.jpg"
 filepath = os.path.join(os.getcwd(), filename)
 qr_data = ""
 
+def update_points():
+    with open('points.txt','r') as f:
+        points = f.read()
+        canvas.itemconfig(label_points,text=points)
+        
+    with open('class.txt', 'r') as f:
+        class_n = f.read()
+        canvas.itemconfig(label_class,text=class_n)
+    points = canvas.itemcget(label_points, 'text')
+    
+    window.after(100,update_points)
+                
 def btn_clicked():
     window.destroy()
 
 def on_press2(event):
     global qr_data 
     url = 'http://localhost:8080/qr-data'
-    with open('points.txt','w') as f:
-        f.write(str(0))
+    #with open('points.txt','w') as f:
+        #f.write(str(0))
     if event.name == 'enter':
-        print("QR CODE SCANNED:",qr_data)
-        payload = {'data': qr_data,'points':sys.argv[2]}
+        print("QR CODE SCANNED yawa:",qr_data)
+        payload = {'data': qr_data,'points':'10'}
         headers = {'Content-Type': 'application/json'}
         response = requests.post(url,json=payload, headers=headers)
+        with open('points.txt', 'w') as f:
+            f.write(str(0))
         if response.ok:
-            window.destroy()
+            print("GOOD")
+            
         else:
             print("not good",response.status_code)
         qr_data = ""
     elif len(event.name) == 1 and event.name.isalnum():
        qr_data += event.name.upper() if keyboard.is_pressed('shift') else event.name.lower()
-def on_press():
-    url = 'http://localhost:8080/qr-data'
+def reset_points ():
     with open('points.txt', 'w') as f:
         f.write(str(0))
+        
+    with open('class.txt', 'w') as f:
+        f.write(" ")
+        
+def on_press():
+    url = 'http://localhost:8080/qr-data'
+    #with open('points.txt', 'w') as f:
+        #f.write(str(0))
     qr_data=pyautogui.password("Scan your QR Code")
+    
+    if qr_data is None:
+        b0.config(state='active')
+        return
     print("QR CODE SCANNED:",qr_data)
-    payload = {'data':qr_data,'points':sys.argv[2]}
+    points = canvas.itemcget(label_points, 'text')
+    print(points)
+    payload = {'data':qr_data,'points':points}
     headers = {'Content-Type': 'application/json'}
     response = requests.post(url,json=payload,headers=headers)
     if(response.ok):
-        window.destroy()
+        #window.destroy()
+        print("GOOD")
+        b0.config(state='active')
+        reset_points()
     else:
         print("NOT GOOD")
     
@@ -54,106 +84,116 @@ def done_clicked():
     #keyboard.on_press(on_press)
     #window.destroy()
 
-def paper_button():
-    print("PAPER")
-    folder_name = 'paper'
-    url = 'http://localhost:8080/upload?folder=' + folder_name
-    files = {'image': open(filepath, 'rb')}
-    response = requests.post(url, files=files)
-    print(response)
-    window.destroy()
-    
-def plastic_button():
-    folder_name = 'plastic'
-    url = 'http://localhost:8080/upload?folder=' + folder_name
-    files = {'image': open(filepath, 'rb')}
-    response = requests.post(url, files=files)
-    print(response)
-    window.destroy()    
-def btn_feedback():
-    feedback_window = Toplevel()
-    feedback_window.title("Feedback")
-    feedback_window.geometry("480x320")
 
+    
+
+def btn_feedback():
+    with open ('class.txt', 'r') as f:
+        class_n = f.read().strip()
+    if class_n:
+        
+        feedback_window = Toplevel()
+        feedback_window.title("Feedback")
+        feedback_window.geometry("480x320")
+        def plastic_button():
+            folder_name = 'plastic'
+            url = 'http://localhost:8080/upload?folder=' + folder_name
+            files = {'image': open(filepath, 'rb')}
+            feedback_window.destroy()
+            response = requests.post(url, files=files)
+            print(response)
+            
+        def paper_button():
+            print("PAPER")
+            folder_name = 'paper'
+            url = 'http://localhost:8080/upload?folder=' + folder_name
+            files = {'image': open(filepath, 'rb')}
+            feedback_window.destroy()
+            response = requests.post(url, files=files)
+            print(response)
+            
     # Create a Frame widget and embed the feedback window inside it
-    feedback_frame = Frame(feedback_window, width=480, height=320)
-    feedback_frame.pack(fill="both", expand=True)
-    feedback_window.resizable(False, False)
+        feedback_frame = Frame(feedback_window, width=480, height=320)
+        feedback_frame.pack(fill="both", expand=True)
+        feedback_window.resizable(False, False)
 
     # Load the feedback window content into the Frame widget
-    feedback_content = Canvas(feedback_frame, width=480, height=320,bg='#292929')
-    feedback_content.pack(fill="both", expand=True)
+        feedback_content = Canvas(feedback_frame, width=480, height=320,bg='#292929')
+        feedback_content.pack(fill="both", expand=True)
 
-    img0 = PhotoImage(file="./GUI/yes.png")
-    b0 = Button(
-        feedback_content,
-        image=img0,
-        borderwidth=0,
-        highlightthickness=0,
-        command=btn_clicked,
-        relief="flat"
-    )
-    b0.place(x=119, y=154, width=81, height=30)
+        img0 = PhotoImage(file="./GUI/yes.png")
+        b0 = Button(
+            feedback_content,
+            image=img0,
+            borderwidth=0,
+            highlightthickness=0,
+            command=btn_clicked,
+            relief="flat"
+        )
+        b0.place(x=119, y=154, width=81, height=30)
 
-    img3 = PhotoImage(file="./GUI/no.png")
-    b3 = Button(
-        feedback_content,
-        image=img3,
-        borderwidth=0,
-        highlightthickness=0,
-        command=lambda: switch_buttons(b0, b3, b1, b2),
-        relief="flat"
-    )
-    b3.place(x=292, y=154, width=81, height=30)
+        img3 = PhotoImage(file="./GUI/no.png")
+        b3 = Button(
+            feedback_content,
+            image=img3,
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: switch_buttons(b0, b3, b1, b2),
+            relief="flat"
+        )
+        b3.place(x=292, y=154, width=81, height=30)
 
-    feedback_content.create_text(
-        233.0, 50.0,
-        text=sys.argv[1],
-        fill="#ffffff",
-        font=("Poppins-Regular", int(17.0))
-    )
+        feedback_content.create_text(
+            233.0, 50.0,
+            text=canvas.itemcget(label_class,'text'),
+            fill="#ffffff",
+            font=("Poppins-Regular", int(17.0))
+        )
 
-    background_img = PhotoImage(file="./GUI/fb-bg.png")
-    background = feedback_content.create_image(
-        194.5, 63.0,
-        image=background_img
-    )
+        background_img = PhotoImage(file="./GUI/fb-bg.png")
+        background = feedback_content.create_image(
+            194.5, 63.0,
+            image=background_img
+        )
 
-    def switch_buttons(button1, button2, button3, button4):
-        button1.destroy()
-        button2.destroy()
+        def switch_buttons(button1, button2, button3, button4):
+            button1.destroy()
+            button2.destroy()
+            img1 = PhotoImage(file="./GUI/paper.png")
+            button3.image = img1
+            button3.config(image=img1, command=paper_button)
+            button3.place(x=119, y=154, width=81, height=30)
+            img2 = PhotoImage(file="./GUI/plastic.png")
+            button4.image = img2
+            button4.config(image=img2, command=plastic_button)
+            button4.place(x=292, y=154, width=81, height=30)
+
         img1 = PhotoImage(file="./GUI/paper.png")
-        button3.image = img1
-        button3.config(image=img1, command=paper_button)
-        button3.place(x=119, y=154, width=81, height=30)
+        b1 = Button(
+            feedback_content,
+            image=img1,
+            borderwidth=0,
+            highlightthickness=0,
+            command=paper_button,
+            relief="flat"
+        )
+        b1.image = img1
+
         img2 = PhotoImage(file="./GUI/plastic.png")
-        button4.image = img2
-        button4.config(image=img2, command=plastic_button)
-        button4.place(x=292, y=154, width=81, height=30)
+        b2 = Button(
+            feedback_content,
+            image=img2,
+            borderwidth=0,
+            highlightthickness=0,
+            command=plastic_button,
+            relief="flat"
+        )
+        b2.image = img2
 
-    img1 = PhotoImage(file="./GUI/paper.png")
-    b1 = Button(
-        feedback_content,
-        image=img1,
-        borderwidth=0,
-        highlightthickness=0,
-        command=paper_button,
-        relief="flat"
-    )
-    b1.image = img1
-
-    img2 = PhotoImage(file="./GUI/plastic.png")
-    b2 = Button(
-        feedback_content,
-        image=img2,
-        borderwidth=0,
-        highlightthickness=0,
-        command=plastic_button,
-        relief="flat"
-    )
-    b2.image = img2
-
-    feedback_window.mainloop()
+        feedback_window.mainloop()
+    else:
+        print("FEEDBACK NOT AVAIL")
+        #b0.config(state='disabled')
 
 window = Tk()
 
@@ -195,15 +235,15 @@ b1.place(
     width = 81,
     height = 30)
 
-canvas.create_text(
+label_points = canvas.create_text(
     323.5, 198.0,
-    text = sys.argv[2],
+    text = "0",
     fill = "#ffffff",
     font = ("Poppins-Regular", int(17.0)))
 
-canvas.create_text(
+label_class = canvas.create_text(
     250.0, 171.0,
-    text = sys.argv[1],
+    text = " ",
     fill = "#ffffff",
     font = ("Poppins-Regular", int(17.0)))
 
@@ -213,4 +253,5 @@ background = canvas.create_image(
     image=background_img)
 
 window.resizable(False, False)
+update_points()
 window.mainloop()

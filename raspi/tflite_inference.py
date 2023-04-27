@@ -17,24 +17,32 @@ output_details = interpreter.get_output_details()
 # Define the class names
 class_names = ['nothing', 'paper', 'plastic']
 points = 0
+class_name = " "
 # Set up the GPIO pins for the IR sensor
 IR_SENSOR_PIN = 21
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(IR_SENSOR_PIN, GPIO.IN)
 with open('points.txt', 'w') as f:
     f.write(str(points))
+with open('class.txt', 'w') as f:
+    f.write(class_name)
 # Define initial points
 
 
+
 # Continuously capture images from the webcam and perform inference when IR sensor is triggered
+
+subprocess.Popen(['python','./GUI/window.py',class_name,str(points)])
 while True:
     # Check if IR sensor is triggered
     if not GPIO.input(IR_SENSOR_PIN) == GPIO.HIGH:
         # Capture an image using raspistill
         with open('points.txt', 'r') as f:
             points = int(f.read().strip())
-			
-        subprocess.call(['raspistill', '-o', 'image.jpg','-t','2000'])
+        with open('class.txt', 'r') as f:
+            class_name = f.read()
+        ## note: remove -n to show the image capturing
+        subprocess.call(['raspistill','-n', '-o', 'image.jpg','-t','1000'])
 
         # Load the captured image and resize it to the required input size of the model
         frame = cv2.imread('image.jpg')
@@ -77,19 +85,15 @@ while True:
                 points += 1
             with open('points.txt', 'w') as f:
                 f.write(str(points))
-            
-            #subprocess.run(['pkill','-f','window.py'])
-            subprocess.Popen(['python','./GUI/window.py',class_name,str(points)])
-            
+            with open ('class.txt', 'w') as f:
+                f.write(class_name)
+
         else:
             print(class_names[class_idx], confidence)
-        # Show the frame
-        #cv2.imshow('frame', frame)
 
-        # Exit the loop if the user presses the 'q' key
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
 
-# Release the webcam and close the window
-cap.release()
-cv2.destroyAllWindows()
+        
+
+GPIO.cleanup()
+
+#cv2.destroyAllWindows()

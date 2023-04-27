@@ -1,0 +1,2 @@
+ps aux | grep tflite_inference
+kill <PID>
