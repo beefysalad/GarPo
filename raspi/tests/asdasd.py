@@ -3,7 +3,7 @@ import time
 
 GPIO.setmode(GPIO.BCM)  # set the GPIO mode to BCM numbering
 
-servo_pin = 20 # set the GPIO pin for the servo
+servo_pin = 19 # set the GPIO pin for the servo
 
 GPIO.setup(servo_pin, GPIO.OUT)  # set the servo pin as an output
 
