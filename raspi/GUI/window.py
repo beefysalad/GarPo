@@ -57,7 +57,13 @@ def on_press():
     url = 'http://localhost:8080/qr-data'
     #with open('points.txt', 'w') as f:
         #f.write(str(0))
-    qr_data=pyautogui.password("Scan your QR Code")
+    try:
+        print("NISUD 2")
+        qr_data=pyautogui.password("Scan your QR CODE")
+    except pyautogui.FailSafeException:
+        print("NISUD")
+        qr_data=None
+    #qr_data=pyautogui.password("Scan your QR Code")
     
     if qr_data is None:
         b0.config(state='active')
