@@ -73,14 +73,27 @@ def on_press():
     print(points)
     payload = {'data':qr_data,'points':points}
     headers = {'Content-Type': 'application/json'}
-    response = requests.post(url,json=payload,headers=headers)
-    if(response.ok):
-        #window.destroy()
-        print("GOOD")
+    try:
+        response = requests.post(url,json=payload, headers=headers)
+        response.raise_for_status()
+        if(response.ok):
+            b0.config(state='active')
+            reset_points()
+    except requests.exceptions.RequestException as e:
+        print("Request exception:", str(e))
         b0.config(state='active')
-        reset_points()
-    else:
-        print("NOT GOOD")
+        
+    #response = requests.post(url,json=payload,headers=headers)
+    
+    #if(response.ok):
+        #window.destroy()
+        #print("GOOD")
+        #b0.config(state='active')
+        #reset_points()
+    #else:
+        #print("NOT GOOD")
+        #b0.config(state='active')
+    
     
     
 def done_clicked():
