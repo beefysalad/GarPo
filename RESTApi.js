@@ -25,28 +25,7 @@ cloudinary.config({
   api_key: '472757221256643',
   api_secret: 'aPd_vvuwGdg56jlU_EjBaNSaTa4',
 });
-let transporter = nodemailer.createTransport({
-  port: 587,
-  secure: true,
-  service: 'gmail',
-  auth: {
-    user: '321garpo@gmail.com',
-    pass: 'fjmzjtdysrdzvsqa',
-  },
-  tls: {
-    rejectUnauthorized: false,
-  },
-});
-const mailOption = {
-  from: '321garpo@gmail.com',
-  to: 'jpatrickzephyr@gmail.com',
-  subject: 'test nodemailer',
-  html: `
-    <h1>Welcome to the Raspberry Pi Email</h1>
-    <p>This is a test email sent from my Raspberry Pi!</p>
-    <img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1682526360/horizontal_vxeyqg.png" alt="Sample Image">
-  `,
-};
+
 const upload = (req, res, class_name) => {
   const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
@@ -78,28 +57,58 @@ app.get('/', (req, res) => {
   console.log(' A QR CODE HAS BEEN SCANNED');
   res.send('GARPO Rest API v1.0.0');
 });
-
-app.post('/bin-full',async(req,res)=>{
-    const {bin_number} = req.body
-    if(bin_number==1){
-      console.log('1')
-      res.send("PLASTIC FULL")
-      }
-    else if(bin_number==2){
-      console.log('2')
-      res.send('paper full')
-      transporter.sendMail(mailOption, (err, info) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log('email sent', info.response);
-  }
+const transporter = nodemailer.createTransport({
+  port: 587,
+  secure: true,
+  service: 'gmail',
+  auth: {
+    user: '321garpo@gmail.com',
+    pass: 'fjmzjtdysrdzvsqa',
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
 });
-    }else if(bin_number==3){
-      console.log('3')
-      res.send('metal full')
-      }
-})
+
+app.post('/bin-full', async (req, res) => {
+  const { bin_number } = req.body;
+
+  let binType = '';
+  let binMessage = '';
+
+  if (bin_number == 1) {
+    binType = 'Plastic Bin';
+    binMessage = 'Plastic bin is full and needs attention!';
+  } else if (bin_number == 2) {
+    binType = 'Paper Bin';
+    binMessage = 'Paper bin is full and needs attention!';
+  } else if (bin_number == 3) {
+    binType = 'Metal Bin';
+    binMessage = 'Metal bin is full and needs attention!';
+  }
+
+  const mailOption = {
+    from: '321garpo@gmail.com',
+    to: 'keanuedax@gmail.com',
+    subject: `${binType} Full`,
+    html: `
+      <h1>Welcome to the Raspberry Pi Email</h1>
+      <p>${binMessage}</p>
+      <img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1682526360/horizontal_vxeyqg.png" alt="Sample Image">
+    `,
+  };
+
+  transporter.sendMail(mailOption, (error, info) => {
+    if (error) {
+      console.error('Error sending email notification:', error);
+      res.status(500).send('Error sending email notification');
+    } else {
+      console.log('Email notification sent successfully:', info.response);
+      res.send('Email notification sent successfully');
+    }
+  });
+});
+
 app.post('/qr-data', async (req, res) => {
   const { data, points } = req.body;
   try {
