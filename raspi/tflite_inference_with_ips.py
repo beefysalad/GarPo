@@ -51,7 +51,7 @@ while True:
                 f.write(str(points))
             with open ('class.txt', 'w') as f:
                 f.write('metal')
-            subprocess.call(['python', 'servo.py'])
+            #subprocess.call(["python","servo_rotation.py","metal"])
             time.sleep(0.5)
             continue
         # Capture an image using raspistill
@@ -95,9 +95,11 @@ while True:
             if class_name == 'plastic':
                 print("NISUD PLASTIC", confidence)
                 points += 2
+                #subprocess.call(["python","servo_rotation.py","plastic"])
             elif class_name == 'paper':
                 print("NISUD PAPER", confidence)
                 points += 1
+                #subprocess.call(["python","servo_rotation.py","paper"])
             with open('points.txt', 'w') as f:
                 f.write(str(points))
             with open ('class.txt', 'w') as f:

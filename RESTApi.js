@@ -8,7 +8,7 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const bodyParser = require('body-parser');
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+const nodemailer = require('nodemailer');
 const admin = require('firebase-admin');
 const serviceAccount = require('./serviceAccount.json');
 
@@ -17,6 +17,7 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
+
 console.clear();
 //Cloudinary and multer config
 cloudinary.config({
@@ -24,7 +25,28 @@ cloudinary.config({
   api_key: '472757221256643',
   api_secret: 'aPd_vvuwGdg56jlU_EjBaNSaTa4',
 });
-
+let transporter = nodemailer.createTransport({
+  port: 587,
+  secure: true,
+  service: 'gmail',
+  auth: {
+    user: '321garpo@gmail.com',
+    pass: 'fjmzjtdysrdzvsqa',
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
+const mailOption = {
+  from: '321garpo@gmail.com',
+  to: 'jpatrickzephyr@gmail.com',
+  subject: 'test nodemailer',
+  html: `
+    <h1>Welcome to the Raspberry Pi Email</h1>
+    <p>This is a test email sent from my Raspberry Pi!</p>
+    <img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1682526360/horizontal_vxeyqg.png" alt="Sample Image">
+  `,
+};
 const upload = (req, res, class_name) => {
   const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
@@ -57,6 +79,27 @@ app.get('/', (req, res) => {
   res.send('GARPO Rest API v1.0.0');
 });
 
+app.post('/bin-full',async(req,res)=>{
+    const {bin_number} = req.body
+    if(bin_number==1){
+      console.log('1')
+      res.send("PLASTIC FULL")
+      }
+    else if(bin_number==2){
+      console.log('2')
+      res.send('paper full')
+      transporter.sendMail(mailOption, (err, info) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log('email sent', info.response);
+  }
+});
+    }else if(bin_number==3){
+      console.log('3')
+      res.send('metal full')
+      }
+})
 app.post('/qr-data', async (req, res) => {
   const { data, points } = req.body;
   try {

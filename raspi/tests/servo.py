@@ -3,10 +3,10 @@ import time
 
 # Set up GPIO pins
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(19, GPIO.OUT)
+GPIO.setup(20, GPIO.OUT)
 
 # Set up PWM
-pwm = GPIO.PWM(19, 50)
+pwm = GPIO.PWM(20, 50)
 pwm.start(0)
 
 # Function to set servo angle
@@ -17,10 +17,10 @@ def set_angle(angle):
         duty = angle / 18 + 2
     else:
         duty = (180 + angle) / 18 + 2
-    GPIO.output(19, True)
+    GPIO.output(20, True)
     pwm.ChangeDutyCycle(duty)
     time.sleep(1)
-    GPIO.output(19,False)
+    GPIO.output(20,False)
     pwm.ChangeDutyCycle(0)
 
 # Rotate servo to 45 degrees and back

@@ -3,26 +3,33 @@ import time
 
 GPIO.setmode(GPIO.BCM)  # set the GPIO mode to BCM numbering
 
-servo_pin = 19 # set the GPIO pin for the servo
+servo_pins = [20]  # set the GPIO pins for the servos
 
-GPIO.setup(servo_pin, GPIO.OUT)  # set the servo pin as an output
+for servo_pin in servo_pins:
+    GPIO.setup(servo_pin, GPIO.OUT)  # set each servo pin as an output
 
-pwm=GPIO.PWM(servo_pin, 50)
+servos = []
+for servo_pin in servo_pins:
+    pwm = GPIO.PWM(servo_pin, 50)
+    pwm.start(0)
+    servos.append(pwm)
 
-pwm.start(0)
+# loop 10 times
+for _ in range(10):
+    # move to 30 degrees
+    print("30 DEG")
+    for pwm in servos:
+        pwm.ChangeDutyCycle(5)
+    time.sleep(1)
 
-# move to 45 degrees
-print("45 DEG")
-pwm.ChangeDutyCycle(7.5)
-time.sleep(1)
-
-# move back to -45 degrees
-print("-45 DEG")
-pwm.ChangeDutyCycle(2.5)
-time.sleep(1)
+    # move back to 0 degrees
+    print("0 DEG")
+    for pwm in servos:
+        pwm.ChangeDutyCycle(7.5)
+    time.sleep(1)
 
 # go back to the starting position
-
-pwm.stop()
+for pwm in servos:
+    pwm.stop()
 
 GPIO.cleanup()

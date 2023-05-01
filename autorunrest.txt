@@ -1,0 +1,1 @@
+@reboot /usr/bin/node /home/g321/Desktop/GarPo/RESTApi.js >/dev/null 2>&1
