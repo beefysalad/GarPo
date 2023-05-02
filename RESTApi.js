@@ -17,7 +17,6 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
-
 console.clear();
 //Cloudinary and multer config
 cloudinary.config({
@@ -72,29 +71,40 @@ const transporter = nodemailer.createTransport({
 
 app.post('/bin-full', async (req, res) => {
   const { bin_number } = req.body;
-
-  let binType = '';
-  let binMessage = '';
-
-  if (bin_number == 1) {
-    binType = 'Plastic Bin';
-    binMessage = 'Plastic bin is full and needs attention!';
-  } else if (bin_number == 2) {
-    binType = 'Paper Bin';
-    binMessage = 'Paper bin is full and needs attention!';
-  } else if (bin_number == 3) {
-    binType = 'Metal Bin';
-    binMessage = 'Metal bin is full and needs attention!';
+  let binType;
+  switch (bin_number) {
+    case 1:
+      binType = 'Plastic';
+      break;
+    case 2:
+      binType = 'Paper';
+      break;
+    case 3:
+      binType = 'Metal';
+      break;
+    default:
+      binType = 'Unknown';
   }
 
   const mailOption = {
     from: '321garpo@gmail.com',
-    to: 'keanuedax@gmail.com',
-    subject: `${binType} Full`,
+    to: 'jpatrickzephyr@gmail.com',
+    subject: 'Bin Capacity Alert',
     html: `
-      <h1>Welcome to the Raspberry Pi Email</h1>
-      <p>${binMessage}</p>
-      <img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1682526360/horizontal_vxeyqg.png" alt="Sample Image">
+      <div style="font-family: Arial, sans-serif; background-color: #F5F5F5; padding: 20px;">
+        <div style="text-align: center;">
+          <h1 style="font-size: 24px; color: #333333;">Bin Capacity Alert</h1>
+          <img src="https://res.cloudinary.com/dhqqwdevm/image/upload/v1682526360/horizontal_vxeyqg.png" alt="Sample Image" style="max-width: 400px; margin: 20px auto;">
+        </div>
+        <div style="background-color: #FFFFFF; padding: 20px; border-radius: 5px;">
+          <p style="font-size: 16px; color: #333333;">The trash bin for the ${binType} category is at maximum capacity already.</p>
+          <p style="font-size: 16px; color: #333333;">Kindly take the necessary measures to address this matter promptly.</p>
+          <p style="font-size: 16px; color: #333333;">Your prompt action will ensure smooth waste management operations and prevent any inconvenience.</p>
+          <br>
+          <p style="font-size: 16px; color: #333333;">Best regards,</p>
+          <p style="font-size: 16px; color: #333333;">Team Garpo</p>
+        </div>
+      </div>
     `,
   };
 
