@@ -101,8 +101,7 @@ app.post('/bin-full', async (req, res) => {
           <p style="font-size: 16px; color: #333333;">Kindly take the necessary measures to address this matter promptly.</p>
           <p style="font-size: 16px; color: #333333;">Your prompt action will ensure smooth waste management operations and prevent any inconvenience.</p>
           <br>
-          <p style="font-size: 16px; color: #333333;">Best regards,</p>
-          <p style="font-size: 16px; color: #333333;">Team Garpo</p>
+          <p style="font-size: 16px; color: #333333;"><strong>Team Garpo</strong></p>
         </div>
       </div>
     `,
