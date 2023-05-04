@@ -11,6 +11,10 @@ filename = "./image.jpg"
 filepath = os.path.join(os.getcwd(), filename)
 qr_data = ""
 
+metal_counter = 0
+paper_counter = 0
+plastic_counter = 0
+
 def update_points():
     with open('points.txt','r') as f:
         points = f.read()
@@ -95,8 +99,56 @@ def on_press():
         #b0.config(state='active')
     
     
-    
+def update_statistics():
+    try:
+        with open('counter_metal.txt', 'r') as f:
+            metal_counter = int(f.read().strip())
+    except FileNotFoundError:
+        # Handle file not found error
+        metal_counter = 0
+    except Exception as e:
+        # Handle other exceptions
+        print(f"An error occurred while reading 'counter_metal.txt': {str(e)}")
+        return
+
+    try:
+        with open('counter_plastic.txt', 'r') as f:
+            plastic_counter = int(f.read().strip())
+    except FileNotFoundError:
+        # Handle file not found error
+        plastic_counter = 0
+    except Exception as e:
+        # Handle other exceptions
+        print(f"An error occurred while reading 'counter_plastic.txt': {str(e)}")
+        return
+
+    try:
+        with open('counter_paper.txt', 'r') as f:
+            paper_counter = int(f.read().strip())
+    except FileNotFoundError:
+        # Handle file not found error
+        paper_counter = 0
+    except Exception as e:
+        # Handle other exceptions
+        print(f"An error occurred while reading 'counter_paper.txt': {str(e)}")
+        return
+
+    stats_url = 'http://localhost:8080/statistics'
+    payload = {'Paper': paper_counter, 'Plastic': plastic_counter, 'Metal': metal_counter}
+    headers = {'Content-Type': 'application/json'}
+
+    try:
+        response = requests.post(stats_url, json=payload, headers=headers)
+        response.raise_for_status()  # Raise an exception for 4xx and 5xx status codes
+        print("Statistics updated successfully")
+    except requests.exceptions.RequestException as e:
+        # Handle request exception
+        print(f"An error occurred while updating statistics: {str(e)}")
+    except Exception as e:
+        # Handle other exceptions
+        print(f"An error occurred during the request: {str(e)}")
 def done_clicked():
+    update_statistics()
     b0.config(state="disabled")
     on_press()
     

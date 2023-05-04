@@ -88,7 +88,7 @@ app.post('/bin-full', async (req, res) => {
 
   const mailOption = {
     from: '321garpo@gmail.com',
-    to: 'jpatrickzephyr@gmail.com',
+    to: 'gcollector.garpo@gmail.com',
     subject: 'Bin Capacity Alert',
     html: `
       <div style="font-family: Arial, sans-serif; background-color: #F5F5F5; padding: 20px;">
@@ -101,7 +101,7 @@ app.post('/bin-full', async (req, res) => {
           <p style="font-size: 16px; color: #333333;">Kindly take the necessary measures to address this matter promptly.</p>
           <p style="font-size: 16px; color: #333333;">Your prompt action will ensure smooth waste management operations and prevent any inconvenience.</p>
           <br>
-          <p style="font-size: 16px; color: #333333;"><strong>Team Garpo</strong></p>
+          <p style="font-size: 16px; color: #333333;"><strong>Team GarPo</strong></p>
         </div>
       </div>
     `,
@@ -142,7 +142,34 @@ app.post('/qr-data', async (req, res) => {
     res.status(500).send('Error getting user');
   }
 });
-
+app.post('/statistics', async (req, res) => {
+  const { Metal, Paper, Plastic } = req.body;
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  const currentDate = `${year}-${month}-${day}`;
+  try {
+    const statsRef = db.collection("Statistics").doc(currentDate);
+    const snapshot = await statsRef.get();
+    
+    if (snapshot.exists) {
+      // Update the existing document
+      await statsRef.update({ Metal, Paper, Plastic });
+      console.log("Document updated");
+    } else {
+      // Create a new document
+      await statsRef.set({ Metal, Paper, Plastic });
+      console.log("New document created");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error');
+  }
+  
+  console.log(req.body);
+  res.send('hehe');
+});
 app.post('/upload', (req, res) => {
   // console.log('nisud');
   const folderPath = req.query.folder || 'DEV';
