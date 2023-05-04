@@ -147,22 +147,19 @@ def update_statistics():
     except Exception as e:
         # Handle other exceptions
         print(f"An error occurred during the request: {str(e)}")
+        
 def done_clicked():
-    update_statistics()
     b0.config(state="disabled")
     on_press()
-    
-    #keyboard.on_press(on_press)
-    #window.destroy()
-
-
-    
+    update_statistics()
 
 def btn_feedback():
     with open ('class.txt', 'r') as f:
         class_n = f.read().strip()
+    #remove if it causes bugs    
     if class_n:
-        
+        if class_n == 'metal':
+            return
         feedback_window = Toplevel()
         feedback_window.title("Feedback")
         feedback_window.geometry("480x320")
