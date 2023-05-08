@@ -16,11 +16,11 @@ paper_counter = 0
 plastic_counter = 0
 
 def update_points():
-    with open('points.txt','r') as f:
+    with open('text_files/points.txt','r') as f:
         points = f.read()
         canvas.itemconfig(label_points,text=points)
         
-    with open('class.txt', 'r') as f:
+    with open('text_files/class.txt', 'r') as f:
         class_n = f.read()
         canvas.itemconfig(label_class,text=class_n)
     points = canvas.itemcget(label_points, 'text')
@@ -40,7 +40,7 @@ def on_press2(event):
         payload = {'data': qr_data,'points':'10'}
         headers = {'Content-Type': 'application/json'}
         response = requests.post(url,json=payload, headers=headers)
-        with open('points.txt', 'w') as f:
+        with open('text_files/points.txt', 'w') as f:
             f.write(str(0))
         if response.ok:
             print("GOOD")
@@ -51,10 +51,10 @@ def on_press2(event):
     elif len(event.name) == 1 and event.name.isalnum():
        qr_data += event.name.upper() if keyboard.is_pressed('shift') else event.name.lower()
 def reset_points ():
-    with open('points.txt', 'w') as f:
+    with open('text_files/points.txt', 'w') as f:
         f.write(str(0))
         
-    with open('class.txt', 'w') as f:
+    with open('text_files/class.txt', 'w') as f:
         f.write(" ")
         
 def on_press():
@@ -101,7 +101,7 @@ def on_press():
     
 def update_statistics():
     try:
-        with open('counter_metal.txt', 'r') as f:
+        with open('text_files/counter_metal.txt', 'r') as f:
             metal_counter = int(f.read().strip())
     except FileNotFoundError:
         # Handle file not found error
@@ -112,7 +112,7 @@ def update_statistics():
         return
 
     try:
-        with open('counter_plastic.txt', 'r') as f:
+        with open('text_files/counter_plastic.txt', 'r') as f:
             plastic_counter = int(f.read().strip())
     except FileNotFoundError:
         # Handle file not found error
@@ -123,7 +123,7 @@ def update_statistics():
         return
 
     try:
-        with open('counter_paper.txt', 'r') as f:
+        with open('text_files/counter_paper.txt', 'r') as f:
             paper_counter = int(f.read().strip())
     except FileNotFoundError:
         # Handle file not found error
@@ -154,7 +154,7 @@ def done_clicked():
     update_statistics()
 
 def btn_feedback():
-    with open ('class.txt', 'r') as f:
+    with open ('text_files/class.txt', 'r') as f:
         class_n = f.read().strip()
     #remove if it causes bugs    
     if class_n:

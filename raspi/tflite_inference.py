@@ -80,11 +80,11 @@ while True:
             if class_name == 'plastic':
                 print("NISUD PLASTIC", confidence)
                 points += 2
-                subprocess.call(["python","servo_rotation.py","paper"])
+                #subprocess.call(["python","servo_rotation.py","paper"])
             elif class_name == 'paper':
                 print("NISUD PAPER", confidence)
                 points += 1
-                subprocess.call(["python","servo_rotation.py","plastic"])
+                #subprocess.call(["python","servo_rotation.py","plastic"])
             with open('points.txt', 'w') as f:
                 f.write(str(points))
             with open ('class.txt', 'w') as f:

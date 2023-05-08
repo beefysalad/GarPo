@@ -122,6 +122,11 @@ app.post('/qr-data', async (req, res) => {
   const { data, points } = req.body;
   try {
     const userRef = db.collection('Users').doc(data);
+    const pointHistoryRef = userRef.collection('PointHistory').doc()
+    const currentDate = new Date()
+    const formattedDate = currentDate.toISOString().slice(0,19).replace('T',' ');
+    
+    //const timestamp = firebase.firestore.FieldValue.serverTimeStamp();
     const userDoc = await userRef.get();
     if (!userDoc.exists) {
       console.log('NISUD SA ERROR');
@@ -134,6 +139,10 @@ app.post('/qr-data', async (req, res) => {
         Points: updatedPoints,
         'Total Points': updatedTotalPoints,
       });
+      await pointHistoryRef.set({
+        points:parseInt(points),
+        timestamp:currentDate,
+        })
       console.log(updatedPoints, updatedTotalPoints);
       res.send('Points updated successfully');
     }
@@ -155,7 +164,11 @@ app.post('/statistics', async (req, res) => {
     
     if (snapshot.exists) {
       // Update the existing document
-      await statsRef.update({ Metal, Paper, Plastic });
+      const data = snapshot.data()
+      const updatedMetal = Metal + data.Metal;
+      const updatedPaper = Paper + data.Paper;
+      const updatedPlastic = Plastic + data.Plastic;
+      await statsRef.update({ Metal:updatedMetal, Paper:updatedPaper, Plastic: updatedPlastic });
       console.log("Document updated");
     } else {
       // Create a new document

@@ -31,20 +31,20 @@ paper_counter = 0
 plastic_counter = 0
 current_date = datetime.today().strftime('%Y-%m-%d')
 
-with open('points.txt', 'w') as f:
+with open('text_files/points.txt', 'w') as f:
     f.write(str(points))
-with open('class.txt', 'w') as f:
+with open('text_files/class.txt', 'w') as f:
     f.write(class_name)
-with open('date_stored.txt', 'w') as f:
+with open('text_files/date_stored.txt', 'w') as f:
     f.write(current_date)
 
 
 def update_counter():
-    with open('counter_metal.txt', 'w') as f:
+    with open('text_files/counter_metal.txt', 'w') as f:
         f.write(str(metal_counter))
-    with open('counter_plastic.txt', 'w') as f:
+    with open('text_files/counter_plastic.txt', 'w') as f:
         f.write(str(plastic_counter))
-    with open('counter_paper.txt', 'w') as f:
+    with open('text_files/counter_paper.txt', 'w') as f:
         f.write(str(paper_counter))
 # Continuously capture images from the webcam and perform inference when IR sensor is triggered
 
@@ -54,11 +54,11 @@ while True:
     # Check if IR sensor is triggered
     if not GPIO.input(IR_SENSOR_PIN) == GPIO.HIGH:
         check_current_date = datetime.today().strftime('%Y-%m-%d')
-        with open('points.txt', 'r') as f:
+        with open('text_files/points.txt', 'r') as f:
             points = int(f.read().strip())
-        with open('class.txt', 'r') as f:
+        with open('text_files/class.txt', 'r') as f:
             class_name = f.read()
-        with open('date_stored.txt','r') as f:
+        with open('text_files/date_stored.txt','r') as f:
             current_date = f.read()
         #check this code remove if it creates bugs
         if check_current_date != current_date:
@@ -66,7 +66,7 @@ while True:
             metal_counter=0
             paper_counter=0
             plastic_counter=0
-            with open('date_stored.txt', 'w') as f:
+            with open('text_files/date_stored.txt', 'w') as f:
                 current_date = check_current_date
                 f.write(current_date)
             
@@ -76,17 +76,17 @@ while True:
             metal_counter+=1
             update_counter()
             points+=3
-            with open('points.txt', 'w') as f:
+            with open('text_files/points.txt', 'w') as f:
                 f.write(str(points))
-            with open ('class.txt', 'w') as f:
+            with open ('text_files/class.txt', 'w') as f:
                 f.write('metal')
-            #subprocess.call(["python","servo_rotation.py","metal"])
+            subprocess.call(["python","servo_rotation.py","metal"])
             time.sleep(0.5)
             continue
         # Capture an image using raspistill
 
         ## note: remove -n to show the image capturing
-        subprocess.call(['raspistill','-n', '-o', 'image.jpg','-t','1000'])
+        subprocess.call(['raspistill', '-o', 'image.jpg','-t','1000'])
 
         # Load the captured image and resize it to the required input size of the model
         frame = cv2.imread('image.jpg')
@@ -112,7 +112,7 @@ while True:
         confidence = prediction[0][class_idx]
 
         # If the predicted class is not "nothing" and the confidence is above 80%
-        if confidence >= 0.8:
+        if confidence >= 0.70:
             # Get the class name for the predicted class
             class_name = class_names[class_idx]
 
@@ -126,16 +126,16 @@ while True:
                 plastic_counter+=1
                 update_counter()
                 points += 2
-                #subprocess.call(["python","servo_rotation.py","plastic"])
+                subprocess.call(["python","servo_rotation.py","plastic"])
             elif class_name == 'paper':
                 print("NISUD PAPER", confidence)
                 paper_counter+=1
                 update_counter()
                 points += 1
-                #subprocess.call(["python","servo_rotation.py","paper"])
-            with open('points.txt', 'w') as f:
+                subprocess.call(["python","servo_rotation.py","paper"])
+            with open('text_files/points.txt', 'w') as f:
                 f.write(str(points))
-            with open ('class.txt', 'w') as f:
+            with open ('text_files/class.txt', 'w') as f:
                 f.write(class_name)
 
         else:

@@ -5,8 +5,8 @@ import requests
 GPIO.setmode(GPIO.BCM)
 
 # Define the pins for each sensor
-TRIGGER_PINS = [0, 5,6]
-ECHO_PINS = [1, 12,13]
+TRIGGER_PINS = [0,5,6]
+ECHO_PINS = [1,12,13]
 
 # Define the distance thresholds for each sensor
 thresh = [
@@ -51,6 +51,11 @@ full_detection_counter = [0] * len(TRIGGER_PINS)
 # Flag to indicate if a bin is full
 bin_full_flag = [False] * len(TRIGGER_PINS)
 
+output_file ="bin_levels.txt"
+def write_bin_level(bin_number,level):
+    with open(output_file, 'a') as f:
+        f.write(f"bin {bin_number}: {level}\n")
+        
 def send_email_notification(bin_number):
     # Data to send in the POST request
     data = {'bin_number': bin_number}
@@ -61,8 +66,6 @@ def send_email_notification(bin_number):
         print('Email notification sent successfully.')
     except requests.exceptions.RequestException as e:
         print('Error sending email notification:', e)
-def test():
-    print("test")
 try:
     while True:
         for i in range(len(TRIGGER_PINS)):
@@ -85,7 +88,6 @@ try:
                 full_detection_counter[i] += 1
 
             if full_detection_counter[i] >= full_detection_threshold:
-                test()
                 send_email_notification(i+1)  # Send email notification for full bin
                 #full_detection_counter[i] = 0  # Reset the counter
 
