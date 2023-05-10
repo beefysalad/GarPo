@@ -72,20 +72,19 @@ const transporter = nodemailer.createTransport({
 app.post('/bin-full', async (req, res) => {
   const { bin_number } = req.body;
   let binType;
-  switch (bin_number) {
-    case 1:
-      binType = 'Plastic';
-      break;
-    case 2:
-      binType = 'Paper';
-      break;
-    case 3:
-      binType = 'Metal';
-      break;
-    default:
-      binType = 'Unknown';
-  }
+  
 
+  if(bin_number==1){
+    binType='Plastic'
+    console.log(bin_number)
+    }else if(bin_number==2){
+      binType='Paper'
+      console.log(bin_number)
+      }
+      else if(bin_number==3){
+        binType='Metal'
+        console.log(bin_number)
+        }
   const mailOption = {
     from: '321garpo@gmail.com',
     to: 'gcollector.garpo@gmail.com',

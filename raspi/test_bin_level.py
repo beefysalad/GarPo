@@ -5,14 +5,15 @@ import requests
 GPIO.setmode(GPIO.BCM)
 
 # Define the pins for each sensor
-TRIGGER_PINS = [0,5,6]
-ECHO_PINS = [1,12,13]
-
+#TRIGGER_PINS = [0,20,6]
+#ECHO_PINS = [1,5,13]
+TRIGGER_PINS = [20]
+ECHO_PINS = [5]
 # Define the distance thresholds for each sensor
 thresh = [
-    [45, 33, 20, 10, 0],  # Thresholds for sensor 1
-    [45, 33, 20, 10, 0],  # Thresholds for sensor 2
-    [45, 33, 20, 10, 0]   # Thresholds for sensor 3
+    [47, 31, 18, 8, 0],  # Thresholds for sensor 1
+    [47, 31, 18, 8, 0],  # Thresholds for sensor 2
+    [47, 31, 18, 8, 0]   # Thresholds for sensor 3
 ]
 
 # Set up the GPIO pins for each sensor

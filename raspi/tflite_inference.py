@@ -7,7 +7,7 @@ import subprocess
 
 
 # Load the TFLite model and allocate tensors
-interpreter = tflite.Interpreter(model_path="./mobilenet_latest.tflite")
+interpreter = tflite.Interpreter(model_path="./FINALE_WEIGHTS/inception_final.tflite")
 interpreter.allocate_tensors()
 
 # Get the input and output tensors
@@ -47,7 +47,7 @@ while True:
         # Load the captured image and resize it to the required input size of the model
         frame = cv2.imread('image.jpg')
         frame=cv2.resize(frame,(480,320))
-        resized_frame = cv2.resize(frame, (224, 224))
+        resized_frame = cv2.resize(frame, (299, 299))
 
         # Preprocess the frame
         preprocessed_frame = np.array(resized_frame, dtype=np.float32) / 255.0
