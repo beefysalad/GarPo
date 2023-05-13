@@ -81,21 +81,21 @@ while True:
                 f.write(current_date)
             
         time.sleep(2)            
-        #if not GPIO.input(INDUCTIVE_SENSOR_PIN) == GPIO.HIGH:
+        if not GPIO.input(INDUCTIVE_SENSOR_PIN) == GPIO.HIGH:
             #print("METAL DETECTED")
-           # if metal_level != 'full':
-                #metal_counter+=1
-                #update_counter()
-                #points+=3
-                #with open('text_files/points.txt', 'w') as f:
-                    #f.write(str(points))
-                #with open('text_files/class.txt', 'w') as f:
-                    #f.write('metal')
-                #subprocess.call(["python","servo_rotation.py","metal"])
-                #time.sleep(0.5)
-                #continue
-            #elif metal_level == 'full':
-                #class_name = 'METAL BIN FULL'
+            if metal_level != 'full':
+                metal_counter+=1
+                update_counter()
+                points+=3
+                with open('text_files/points.txt', 'w') as f:
+                    f.write(str(points))
+                with open('text_files/class.txt', 'w') as f:
+                    f.write('metal')
+                subprocess.call(["python","servo_rotation.py","metal"])
+                time.sleep(0.5)
+                continue
+            elif metal_level == 'full':
+                class_name = 'METAL BIN FULL'
                 #DIRI NAG END ANG AKONG NEW CODE#
             #metal_counter+=1
             #update_counter()
@@ -150,7 +150,7 @@ while True:
                 plastic_counter+=1
                 update_counter()
                 points += 2
-                #subprocess.call(["python","servo_rotation.py","plastic"])
+                subprocess.call(["python","servo_rotation.py","plastic"])
             elif class_name == 'plastic' and plastic_level == 'full':
                 class_name = 'PLASTIC BIN FULL'
             elif class_name == 'paper' and paper_level != 'full':
@@ -158,7 +158,7 @@ while True:
                 paper_counter+=1
                 update_counter()
                 points += 1
-                #subprocess.call(["python","servo_rotation.py","paper"])
+                subprocess.call(["python","servo_rotation.py","paper"])
             elif class_name =='paper' and paper_level == 'full':
                 class_name = 'PAPER BIN FULL'
             with open('text_files/points.txt', 'w') as f:
