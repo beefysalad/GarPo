@@ -5,17 +5,17 @@ import requests
 GPIO.setmode(GPIO.BCM)
 
 # Define the pins for each sensor
-#TRIGGER_PINS = [0,20,6]
-#ECHO_PINS = [1,5,13]
-TRIGGER_PINS = [20]
-ECHO_PINS = [5]
+TRIGGER_PINS = [0,20,6]
+ECHO_PINS = [1,5,13]
+#TRIGGER_PINS = [20]
+#ECHO_PINS = [5]
 email_sent = {}
 # Define the distance thresholds for each sensor
-#thresh = [
-    #[47, 31, 18, 8, 0],  # Thresholds for sensor 1
-    #[47, 31, 18, 8, 0],  # Thresholds for sensor 2
-    #[47, 31, 18, 8, 0]   # Thresholds for sensor 3
-#]
+thresh = [
+    [47, 31, 18, 8, 0],  # Thresholds for sensor 1
+    [47, 31, 18, 8, 0],  # Thresholds for sensor 2
+    [47, 31, 18, 8, 0]   # Thresholds for sensor 3
+]
 thresh = [
 	[24,18,12,6,0]
 ]
