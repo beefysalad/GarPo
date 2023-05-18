@@ -28,7 +28,7 @@ Adviser: Julian N. Semblante
 - [x] Port the model to TensorflowLite
 - [x] Setup Express.js Backend for REST API on the Raspi
 - [x] Communication between REST API and Flutter Mobile Application
-- [ ] Connect Entire components together
+- [x] Connect Entire components together
 
 ## Tech Stack Used
 
