@@ -20,9 +20,9 @@ const db = admin.firestore();
 console.clear();
 //Cloudinary and multer config
 cloudinary.config({
-  cloud_name: 'dhqqwdevm',
-  api_key: '472757221256643',
-  api_secret: 'aPd_vvuwGdg56jlU_EjBaNSaTa4',
+  cloud_name: 'cloudname',
+  api_key: 'apiekey',
+  api_secret: 'apiesecret',
 });
 
 const upload = (req, res, class_name) => {
@@ -61,8 +61,8 @@ const transporter = nodemailer.createTransport({
   secure: true,
   service: 'gmail',
   auth: {
-    user: '321garpo@gmail.com',
-    pass: 'fjmzjtdysrdzvsqa',
+    user: 'authuser',
+    pass: 'authpass',
   },
   tls: {
     rejectUnauthorized: false,
@@ -128,7 +128,7 @@ app.post('/qr-data', async (req, res) => {
     //const timestamp = firebase.firestore.FieldValue.serverTimeStamp();
     const userDoc = await userRef.get();
     if (!userDoc.exists) {
-      console.log('NISUD SA ERROR');
+      
       res.status(404).send('User not found');
     } else {
       const userData = userDoc.data();
@@ -168,7 +168,7 @@ app.post('/statistics', async (req, res) => {
       const updatedPaper = Paper + data.Paper;
       const updatedPlastic = Plastic + data.Plastic;
       await statsRef.update({ Metal:updatedMetal, Paper:updatedPaper, Plastic: updatedPlastic });
-      console.log("Document updated");
+      
     } else {
       // Create a new document
       await statsRef.set({ Metal, Paper, Plastic });
@@ -186,15 +186,7 @@ app.post('/upload', (req, res) => {
   // console.log('nisud');
   const folderPath = req.query.folder || 'DEV';
   upload(req, res, folderPath);
-  // console.log(folderPath);
-  // const file = req.file.path;
-  // cloudinary.uploader.upload(file, (err, result) => {
-  //   if (err) {
-  //     res.status(500).send({ error: 'ERROR BRO' });
-  //   } else {
-  //     res.status(200).send({ message: 'SUCCESS BRO' });
-  //   }
-  // });
+ 
 });
 
 app.listen(port, () => {
